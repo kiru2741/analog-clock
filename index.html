@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script defer src="https://cdn.tailwindcss.com"></script>
+    <title>Analog Clock</title>
+</head>
+<body class="bg-neutral-900 min-h-screen flex justify-center flex-col items-center">
+    <div class="border-2 border-neutral-300 h-60 w-60 rounded-full relative">
+        <div class="absolute w-0.5 bg-indigo-400 h-16 top-2/4 left-2/4 z-10 -translate-x-2/4 rounded origin-top" id="hr"></div>
+        <div class="absolute w-0.5 bg-indigo-400 h-20 top-2/4 left-2/4 z-20 -translate-x-2/4 rounded origin-top" id="min"></div>
+        <div class="absolute w-px bg-indigo-500 h-24 top-2/4 left-2/4 z-30 -translate-x-2/4 rounded origin-top" id="sec"></div>
+        <div class="h-[7px] w-[7px] top-2/4 left-2/4 bg-neutral-300 rounded-full z-40 absolute -translate-x-2/4 -translate-y-2/4"></div>
+    </div>
+    <h1 class="mt-5 text-neutral-300"></h1>
+
+    <script>
+        let hr = document.getElementById('hr')
+        let min = document.getElementById('min')
+        let sec = document.getElementById('sec')
+        setInterval(function(){
+            let now = new Date()
+            let seconds = now.getSeconds()
+            let minutes = now.getMinutes()
+            let hours = now.getHours()
+            sec.style.transform = `rotate(${seconds*6+180}deg)`
+            min.style.transform = `rotate(${minutes*6+seconds/10+180}deg)`
+            hr.style.transform = `rotate(${hours*30+(minutes/10)*5+180}deg)`
+
+            const obj = {
+                month:'short',
+                day: 'numeric',
+                weekday:'short',
+            }
+            let formattedDateDay = new Intl.DateTimeFormat('en-IN', obj).format(now);
+            document.querySelector('h1').textContent = formattedDateDay;
+        },1000)
+    </script>
+</body>
+</html>
